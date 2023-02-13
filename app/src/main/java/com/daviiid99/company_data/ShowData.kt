@@ -232,7 +232,7 @@ class showData {
 
         if (local_file.exists()){
             // Remove it before try to download a new version
-            local_file.delete()
+            local_file.deleteOnExit()
         }
 
         url.httpDownload().destination { _, _ -> local_file }.response { result ->

@@ -1,11 +1,13 @@
 package com.daviiid99.company_data
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.view.WindowManager
 import android.widget.Button
-import kotlinx.serialization.Serializable
+import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
             nextScreen("jobs", retrieveData, Intent)
         }
 
+        requestStoragePermission()
+
     }
 
     fun nextScreen(action : String, retrieveData : showData, intent : Intent){
@@ -56,6 +60,17 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
+
+    fun requestStoragePermission(){
+        val intent = Intent(
+            ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+            Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+        )
+
+        val APP_STORAGE_ACCESS_REQUEST_CODE = 501 // Any value
+        startActivityForResult(intent, APP_STORAGE_ACCESS_REQUEST_CODE)
+    }
+
 
     fun fullScreenMode(){
         // Full screen mode support
